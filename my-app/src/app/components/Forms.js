@@ -1,10 +1,9 @@
-// app/components/LinkForm.js
 'use client';
 
 import React, { useState } from 'react';
 import styles from '../styles/Forms.module.css';
 
-const LinkForm = () => {
+const Forms = () => {
   const [links, setLinks] = useState(['']);
 
   const handleAddLink = () => {
@@ -16,11 +15,18 @@ const LinkForm = () => {
     setLinks(newLinks);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitted Links:', links);
+    const response = await fetch('/api/retrieve-transcripts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ links }),
+    });
   };
 
+  
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
@@ -46,4 +52,4 @@ const LinkForm = () => {
   );
 };
 
-export default LinkForm;
+export default Forms;
